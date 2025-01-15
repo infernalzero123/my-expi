@@ -1,11 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "typeface-roboto";
+@import "typeface-inter";
 
 /* Custom root variables */
 :root {
-  --font-sans: "Roboto", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-sans: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
   --line-height: 1.5;
   --font-weight: 400;
   --font-synthesis: none;
