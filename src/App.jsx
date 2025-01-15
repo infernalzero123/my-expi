@@ -17,7 +17,7 @@ export const App = () => {
           <section id="" className="w-full min-h-screen bg-sky-500">
             <div>
               <h1 className="text-zinc-800 text-[2rem] font-mono font-semibold">
-                WHAT I DO
+                WHAT I DOS
               </h1>
             </div>
           </section>
