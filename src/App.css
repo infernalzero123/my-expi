@@ -1,0 +1,34 @@
+.sidebar-container {
+  position: fixed;
+  top: 0.5rem; /* Equivalent to `top-2` */
+  right: -20rem; /* Initial off-screen position */
+  width: 18rem; /* Equivalent to `w-72` */
+  height: 98vh; /* Equivalent to `h-[98vh]` */
+  z-index: 20; /* Equivalent to `z-20` */
+  border-radius: 1rem; /* Equivalent to `rounded-2xl` */
+  background-color: rgba(
+    39,
+    39,
+    42,
+    0.5
+  ); /* Equivalent to `bg-zinc-800 bg-opacity-50` */
+  backdrop-filter: blur(12px); /* Equivalent to `backdrop-blur-md` */
+  overflow: hidden;
+  transition: all 0.5s ease-in-out; /* Equivalent to `transition-all duration-500 ease-in-out` */
+}
+
+.custom-button {
+  padding: 0;
+  border: none;
+  border-radius: 0.5rem; /* Matches rounded-lg */
+  position: absolute;
+  top: 0.5rem; /* Matches top-2 */
+  left: 0.5rem; /* Matches left-2 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-button:focus {
+  outline: none;
+}
