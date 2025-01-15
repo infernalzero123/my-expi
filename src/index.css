@@ -1,18 +1,58 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "typeface-roboto";
 
+/* Custom root variables */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --font-sans: "Roboto", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --line-height: 1.5;
+  --font-weight: 400;
+  --font-synthesis: none;
+  --text-rendering: optimizeLegibility;
+  --webkit-font-smoothing: antialiased;
+  --moz-osx-font-smoothing: grayscale;
+  --color-scheme: light dark;
+}
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: rgb(240, 242, 245);
+/* Global Styles */
+html {
+  font-family: var(--font-sans);
+  line-height: var(--line-height);
+  font-weight: var(--font-weight);
+  color-scheme: var(--color-scheme);
+  color: rgba(255, 255, 255); /* Default color */
+  background-color: rgb(255, 255, 255); /* Default background */
+  -webkit-font-smoothing: var(--webkit-font-smoothing);
+  -moz-osx-font-smoothing: var(--moz-osx-font-smoothing);
+  text-rendering: var(--text-rendering);
+  scroll-behavior: smooth;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Apply Tailwind's defaults for body */
+body {
+  font-family: var(--font-sans);
+  background-color: rgb(255, 255, 255); /* Default background */
+  color: rgba(255, 255, 255); /* Default color */
+  -webkit-font-smoothing: var(--webkit-font-smoothing);
+  -moz-osx-font-smoothing: var(--moz-osx-font-smoothing);
+  text-rendering: var(--text-rendering);
+  @apply font-sans text-base leading-relaxed; /* Tailwind utilities */
+}
+
+/* Universal box-sizing and transitions */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  transition: color 500ms, background-color 500ms;
+  user-select: none;
+}
+
+/* Scroll behavior for smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
