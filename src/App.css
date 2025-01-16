@@ -2,6 +2,7 @@
 html,
 body {
   overflow: scroll; /* Allow scrolling */
+  user-select: none;
 }
 
 html::-webkit-scrollbar,

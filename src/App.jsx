@@ -52,24 +52,61 @@ export function App() {
   }, []);
 
   const { isDarkMode, setIsDarkMode } = useResponsive();
-  const [size, setSize] = useState({ width: 0 });
+  const [size, setSize] = useState(() => {
+    // Initialize size based on dark mode or previous state
+    return isDarkMode ? { width: window.innerWidth * 5 } : { width: 0 };
+  });
 
   const toggleSize = () => {
-    if (size.width === 0) {
-      // Increase size to full screen
-      setSize({ width: window.innerWidth * 5 });
-    } else {
-      // Reset size to 0
+    if (isDarkMode) {
+      // Reset size to 0 when dark mode is not active
       setSize({ width: 0 });
+    } else {
+      // Set width to 5 times the window width when dark mode is active
+      setSize({ width: window.innerWidth * 5 });
     }
   };
+
+  useEffect(() => {
+    // Adjust size on page load based on isDarkMode
+    if (isDarkMode) {
+      setSize({ width: window.innerWidth * 5 });
+    } else {
+      setSize({ width: 0 });
+    }
+
+    const handleResize = () => {
+      if (isDarkMode) {
+        setSize({ width: window.innerWidth * 5 });
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isDarkMode]);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      const savedSize = localStorage.getItem("size") || window.innerWidth * 3;
+      setSize({ width: parseInt(savedSize, 10) });
+    }
+  }, [isDarkMode]);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      localStorage.setItem("size", size.width);
+    }
+  }, [size, isDarkMode]);
 
   return (
     <>
       {/* Body Container */}
       <div className="w-screen min-h-screen overflow-hidden m-0 p-0 md:mt-0">
         {/* Dark Mode Overlay */}
-        <div className="fixed top-20 left-48 flex flex-col items-center justify-center min-h-screen bg-lime-500">
+        <div className="fixed top-0 left-0 flex flex-col items-center justify-center min-h-screen bg-lime-500">
           <div
             className={`rounded-full absolute top-0 left-0 ${
               size.width === 0
@@ -89,7 +126,13 @@ export function App() {
         <div className="fixed top-0 left-0 w-full min-h-20 md:w-56 md:h-screen bg-zinc-8000 shadow-lg z-50">
           {/* Navbar Content */}
           <nav>
-            <div className="relative hidden md:flex flex-row items-center w-full h-20 border-b-2 border-zinc-700 px-5 mb-3">
+            <div
+              className={`relative hidden md:flex flex-row items-center w-full h-20 border-b-2 border-zinc-200 dark:border-zinc-700 px-5 mb-5 ${
+                isDarkMode
+                  ? "transition-colors duration-200 delay-100"
+                  : "transition-colors duration-200 delay-300"
+              }`}
+            >
               <img
                 onClick={() => setIsDarkMode((prev) => !prev)}
                 src="../src/img/shield.png"
@@ -113,13 +156,45 @@ export function App() {
                   toggleSize(); // Call the toggleSize function
                   setIsDarkMode((prev) => !prev); // Toggle dark mode
                 }}
-                className="absolute bottom-[-1.25rem] right-3 w-10 h-10 bg-zinc-700 rounded-full"
-              ></div>
+                className="absolute flex justify-center items-center bottom-[-1.25rem] right-4 w-10 h-10 bg-zinc-100 dark:bg-zinc-700 border-2 border-zinc-200 dark:border-transparent rounded-full transition-all duration-400 delay-100 ease-in-out shadow-md dark:shadow-sky-800"
+              >
+                {isDarkMode ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-7 text-zinc-700 dark:text-zinc-100 transition-all duration-500"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-7 text-orange-300 dark:text-zinc-100 rotate-45 transition-all duration-500"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                    />
+                  </svg>
+                )}
+              </div>
             </div>
             <ul className="relative hidden md:block flex-row md:flex-col space-y-3 pl-8 px-5 overflow-hidden">
               <div className="absolute top-2 left-4 w-[2px] h-full bg-gradient-to-t from-sky-800 to-purple-800 rounded-full">
                 <div
-                  className="absolute top-0 left-0 ml-[-7px] w-4 h-4 bg-zinc-800 border-[3px] rounded-full transition-all duration-500"
+                  className="absolute top-0 left-0 ml-[-7px] w-4 h-4 border-[3px] overflow-hidden rounded-full transition-all duration-1000"
                   style={{
                     top: `${
                       navItems.findIndex(
@@ -128,40 +203,43 @@ export function App() {
                         60 +
                       20
                     }px`,
+                    backgroundColor: getGradientColor(
+                      navItems.findIndex(
+                        (item) => `#${item.href}` === activeLink
+                      )
+                    ),
                     borderColor: getGradientColor(
                       navItems.findIndex(
                         (item) => `#${item.href}` === activeLink
                       )
                     ),
                   }}
-                >
-                  {/* Active Link Pointer */}
-                </div>
+                ></div>
               </div>
 
               {navItems.map((item, index) => (
                 <li
                   key={index}
-                  className={`group w-full flex items-center text-zinc-800 hover:bg-zinc-800/10 dark:hover:bg-zinc-100/20 space-x-5 rounded-md ${
-                    activeLink === `#${item.href}` ? "" : ""
+                  className={`group w-full flex items-center hover:bg-zinc-500/20 hover:dark:bg-zinc-500/30 space-x-5 rounded-md ${
+                    activeLink === `#${item.href}`
+                      ? "bg-zinc-500/10 dark:bg-zinc-500/20"
+                      : ""
                   }`}
                 >
                   {/* Conditionally render anchor tag for items with href */}
                   {item.href ? (
                     <a
                       href={`#${item.href}`}
-                      className="flex items-center space-x-6 w-full py-2 pl-2 pr-4 text-zinc-800 dark:text-zinc-100" // Apply padding here
+                      className="flex items-center space-x-6 w-full py-2 pl-2 pr-4 text-zinc-800 dark:text-zinc-100 transition-colors delay-200 lg:delay-300" // Apply padding here
                       onClick={() => setActiveLink(`#${item.href}`)} // Update the active link on click
                     >
                       <div className="w-8 h-8 flex justify-center items-center">
-                        <item.icon className="w-7 h-7 transition-colors delay-200 lg:delay-100" />
+                        <item.icon className="w-7 h-7" />
                       </div>
-                      <span className="whitespace-nowrap transition-colors delay-200 lg:delay-100">
-                        {item.label}
-                      </span>
+                      <span className="whitespace-nowrap">{item.label}</span>
                     </a>
                   ) : (
-                    <a className="text-zinc-800 dark:text-zinc-100 transition-colors delay-200 lg:delay-100">
+                    <a className="text-zinc-800 dark:text-zinc-100 transition-colors delay-200 lg:delay-300">
                       <div className="flex items-center space-x-6 w-full py-2 pl-2 pr-4">
                         <div className="w-8 h-8 flex justify-center items-center">
                           <item.icon className="w-7 h-7" />
@@ -186,7 +264,7 @@ export function App() {
           {/* Content Container */}
           <div className="absolute top-0 left-0 w-full h-full pt-20 md:pl-56 md:p-0">
             <div className="relative max-w-[110rem] h-full mr-auto">
-              <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold text-end transition-colors delay-300">
+              <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold text-end transition-colors delay-200 lg:delay-300">
                 SECTION 1
               </h1>
             </div>
@@ -199,7 +277,7 @@ export function App() {
           {/* Content Container */}
           <div className="absolute top-0 left-0 w-full h-full p-0 md:pl-56 md:p-0">
             <div className="max-w-[110rem] h-full mr-auto px-2 md:px-5">
-              <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold text-end">
+              <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold text-end transition-colors delay-200 lg:delay-300">
                 SECTION 2
               </h1>
             </div>

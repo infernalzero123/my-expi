@@ -74,8 +74,8 @@ export const useResponsive = () => {
       document.body.style.backgroundColor = "rgb(39 39 42)"; // Dark mode background*/
     } else {
       document.documentElement.classList.remove("dark");
-      document.documentElement.style.backgroundColor = "rgb(226, 232, 240)"; // Light mode background
-      document.body.style.backgroundColor = "rgb(226, 232, 240)"; // Light mode background
+      document.documentElement.style.backgroundColor = "rgb(244 244 245)"; // Light mode background
+      document.body.style.backgroundColor = "rgb(244 244 245)"; // Light mode background
     }
 
     // Save dark mode preference to localStorage
