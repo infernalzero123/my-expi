@@ -69,10 +69,6 @@ a {
   h6 {
     font-size: 0.875rem;
   }
-  p,
-  a {
-    font-size: 0.875rem;
-  }
 }
 
 @media (max-width: 768px) {
