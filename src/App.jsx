@@ -56,10 +56,8 @@ export function App() {
 
   const toggleSize = () => {
     if (size.width === 0) {
-      // Increase size based on isDarkMode
-      setSize({
-        width: isDarkMode ? window.innerWidth * 3 : window.innerWidth,
-      });
+      // Increase size to full screen
+      setSize({ width: window.innerWidth * 5 });
     } else {
       // Reset size to 0
       setSize({ width: 0 });
@@ -113,7 +111,7 @@ export function App() {
               <div
                 onClick={() => {
                   toggleSize(); // Call the toggleSize function
-                  setIsDarkMode((prev) => !prev); // Toggle dark mode
+                  setIsDarkModes((prev) => !prev); // Toggle dark mode
                 }}
                 className="absolute bottom-[-1.25rem] right-3 w-10 h-10 bg-zinc-700 rounded-full"
               ></div>
