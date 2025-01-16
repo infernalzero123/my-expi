@@ -1,5 +1,6 @@
 import "react";
 import "./App.css";
+import { useResponsive } from "./Responsive";
 //import { Milestone } from "./Milestone";
 import {
   HomeIcon,
@@ -45,19 +46,20 @@ const getGradientColor = (index) => {
 
 export function App() {
   const [activeLink, setActiveLink] = useState("");
-
   // Track the active section when the hash changes
   useEffect(() => {
     setActiveLink(window.location.hash);
   }, []);
 
-  // Increase size by 50px
+  const { isDarkMode, setIsDarkMode } = useResponsive();
   const [size, setSize] = useState({ width: 0 });
 
   const toggleSize = () => {
     if (size.width === 0) {
-      // Increase size to full screen width
-      setSize({ width: window.innerWidth * 3});
+      // Increase size based on isDarkMode
+      setSize({
+        width: isDarkMode ? window.innerWidth * 3 : window.innerWidth,
+      });
     } else {
       // Reset size to 0
       setSize({ width: 0 });
@@ -68,23 +70,53 @@ export function App() {
     <>
       {/* Body Container */}
       <div className="w-screen min-h-screen overflow-hidden m-0 p-0 md:mt-0">
+        {/* Dark Mode Overlay */}
+        <div className="fixed top-20 left-48 flex flex-col items-center justify-center min-h-screen bg-lime-500">
+          <div
+            className={`rounded-full absolute top-0 left-0 ${
+              size.width == 0
+                ? "transition-all duration-500"
+                : "transition-all duration-[1.5s]"
+            }`}
+            style={{
+              width: `${size.width}px`,
+              height: `${size.width}px`,
+              marginTop: `${size.width - size.width * 1.5}px`,
+              marginLeft: `${size.width - size.width * 1.5}px`,
+              backgroundColor: "rgb(39 39 42)",
+            }}
+          ></div>
+        </div>
         {/* Navbar Container */}
-        <div className="fixed top-0 left-0 w-full min-h-20 md:w-56 md:h-screen bg-zinc-800 shadow-lg z-50">
+        <div className="fixed top-0 left-0 w-full min-h-20 md:w-56 md:h-screen bg-zinc-8000 shadow-lg z-50">
           {/* Navbar Content */}
           <nav>
-            <div className="relative hidden md:flex flex-row items-center w-full h-20 bg-zinc-800 border-b-2 border-zinc-700 px-5 mb-3">
+            <div className="relative hidden md:flex flex-row items-center w-full h-20 border-b-2 border-zinc-700 px-5 mb-3">
               <img
+                onClick={() => setIsDarkMode((prev) => !prev)}
                 src="../src/img/shield.png"
                 className="w-10 h-10"
                 alt="Shield Icon"
               />
               <h3 className="ml-4 text-sky-800 font-medium">
                 PRO
-                <span className="text-zinc-100 font-light transition-colors duration-100">
+                <span
+                  className={`font-normal transition-colors ${
+                    size.width >= 100
+                      ? "text-zinc-100"
+                      : " text-zinc-900 transition-colors delay-200"
+                  }`}
+                >
                   {":"}File
                 </span>
               </h3>
-              <div className="absolute bottom-[-1.25rem] right-3 w-10 h-10 bg-zinc-700 rounded-full"></div>
+              <div
+                onClick={() => {
+                  toggleSize(); // Call the toggleSize function
+                  setIsDarkMode((prev) => !prev); // Toggle dark mode
+                }}
+                className="absolute bottom-[-1.25rem] right-3 w-10 h-10 bg-zinc-700 rounded-full"
+              ></div>
             </div>
             <ul className="relative hidden md:block flex-row md:flex-col space-y-3 pl-8 px-5 overflow-hidden">
               <div className="absolute top-2 left-4 w-[2px] h-full bg-gradient-to-t from-sky-800 to-purple-800 rounded-full">
@@ -112,7 +144,7 @@ export function App() {
               {navItems.map((item, index) => (
                 <li
                   key={index}
-                  className={`group w-full flex items-center text-zinc-100 bg-zinc-7000 transition-all duration-100 hover:bg-zinc-100/10 space-x-5 rounded-md ${
+                  className={`group w-full flex items-center text-zinc-800 hover:bg-zinc-800/10 dark:hover:bg-zinc-100/20 space-x-5 rounded-md ${
                     activeLink === `#${item.href}` ? "" : ""
                   }`}
                 >
@@ -120,25 +152,23 @@ export function App() {
                   {item.href ? (
                     <a
                       href={`#${item.href}`}
-                      className="flex items-center space-x-6 w-full py-2 pl-2 pr-4" // Apply padding here
+                      className="flex items-center space-x-6 w-full py-2 pl-2 pr-4 text-zinc-800 dark:text-zinc-100" // Apply padding here
                       onClick={() => setActiveLink(`#${item.href}`)} // Update the active link on click
                     >
                       <div className="w-8 h-8 flex justify-center items-center">
-                        <item.icon className="w-7 h-7 transition-all duration-0" />
+                        <item.icon className="w-7 h-7 transition-colors delay-200 lg:delay-100" />
                       </div>
-                      <span className="whitespace-nowrap transition-all duration-100">
+                      <span className="whitespace-nowrap transition-colors delay-200 lg:delay-100">
                         {item.label}
                       </span>
                     </a>
                   ) : (
-                    <a onClick={toggleSize}>
+                    <a className="text-zinc-800 dark:text-zinc-100 transition-colors delay-200 lg:delay-100">
                       <div className="flex items-center space-x-6 w-full py-2 pl-2 pr-4">
                         <div className="w-8 h-8 flex justify-center items-center">
-                          <item.icon className="w-7 h-7 transition-all duration-0" />
+                          <item.icon className="w-7 h-7" />
                         </div>
-                        <span className="whitespace-nowrap transition-all duration-100">
-                          {item.label}
-                        </span>
+                        <span className="whitespace-nowrap">{item.label}</span>
                       </div>
                     </a>
                   )}
@@ -153,37 +183,25 @@ export function App() {
         {/* Section */}
         <section
           id="home"
-          className="relative w-full min-h-screen bg-sky-500 overflow-hidden"
+          className="relative w-full min-h-screen overflow-hidden"
         >
           {/* Content Container */}
           <div className="absolute top-0 left-0 w-full h-full pt-20 md:pl-56 md:p-0">
-            <div className="relative max-w-[110rem] h-full bg-zinc-800 mr-auto">
-              <h1 className="hidden text-zinc-800 text-[2rem] font-mono font-semibold text-end">
+            <div className="relative max-w-[110rem] h-full mr-auto">
+              <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold text-end transition-colors delay-1000">
                 SECTION 1
               </h1>
-              <div className="absolute w-full h-full top-20 flex flex-col items-center justify-center min-h-screen bg-lime-500 overflow-hidden">
-                <div
-                  className="rounded-full absolute top-0 left-0 transition-all duration-1000"
-                  style={{
-                    width: `${size.width}px`,
-                    height: `${size.width}px`,
-                    marginTop: `${size.width - size.width * 1.5}px`,
-                    marginLeft: `${size.width - size.width * 1.5}px`,
-                    backgroundColor: "rgb(39 39 42)",
-                  }}
-                ></div>
-              </div>
             </div>
           </div>
         </section>
         <section
           id="about"
-          className="relative w-full min-h-screen bg-sky-500 overflow-hidden"
+          className="relative w-full min-h-screen overflow-hidden"
         >
           {/* Content Container */}
           <div className="absolute top-0 left-0 w-full h-full p-0 md:pl-56 md:p-0">
-            <div className="max-w-[110rem] h-full bg-zinc-100 mr-auto px-2 md:px-5">
-              <h1 className="text-zinc-800 text-[2rem] font-mono font-semibold text-end">
+            <div className="max-w-[110rem] h-full mr-auto px-2 md:px-5">
+              <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold text-end">
                 SECTION 2
               </h1>
             </div>

@@ -3,7 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* Custom root variables */
 :root {
   --font-sans: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -22,8 +21,8 @@ html {
   line-height: var(--line-height);
   font-weight: var(--font-weight);
   color-scheme: var(--color-scheme);
-  color: rgba(255, 255, 255);
-  background-color: rgb(255, 255, 255);
+  color: rgb(244 244 245);
+  background-color: rgb(244 244 245);
   -webkit-font-smoothing: var(--webkit-font-smoothing);
   -moz-osx-font-smoothing: var(--moz-osx-font-smoothing);
   text-rendering: var(--text-rendering);
@@ -36,8 +35,8 @@ html {
 /* Apply Tailwind's defaults for body */
 body {
   font-family: var(--font-sans);
-  background-color: rgb(255, 255, 255);
-  color: rgba(255, 255, 255);
+  background-color: rgb(244 244 245);
+  color: rgb(244 244 245);
   -webkit-font-smoothing: var(--webkit-font-smoothing);
   -moz-osx-font-smoothing: var(--moz-osx-font-smoothing);
   text-rendering: var(--text-rendering);
@@ -50,7 +49,7 @@ body {
 *::before,
 *::after {
   box-sizing: border-box;
-  transition: color 500ms, background-color 500ms;
+  transition: color 0ms, background-color 0ms;
   user-select: none;
 }
 
