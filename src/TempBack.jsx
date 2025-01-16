@@ -72,7 +72,7 @@ export function App() {
         <div className="fixed top-20 left-48 flex flex-col items-center justify-center min-h-screen bg-lime-500">
           <div
             className={`rounded-full absolute top-0 left-0 ${
-              size.width == 0
+              size.width === 0
                 ? "transition-all duration-500"
                 : "transition-all duration-[1.5s]"
             }`}
@@ -100,9 +100,9 @@ export function App() {
                 PRO
                 <span
                   className={`font-normal transition-colors ${
-                    size.width >= 100
-                      ? "text-zinc-100"
-                      : " text-zinc-900 transition-colors delay-200"
+                    size.width === 0
+                      ? "text-zinc-900 transition-colors delay-200"
+                      : "text-zinc-100 "
                   }`}
                 >
                   {":"}File
@@ -111,7 +111,7 @@ export function App() {
               <div
                 onClick={() => {
                   toggleSize(); // Call the toggleSize function
-                  setIsDarkModes((prev) => !prev); // Toggle dark mode
+                  setIsDarkMode((prev) => !prev); // Toggle dark mode
                 }}
                 className="absolute bottom-[-1.25rem] right-3 w-10 h-10 bg-zinc-700 rounded-full"
               ></div>
