@@ -1,7 +1,8 @@
+@import "typeface-inter";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "typeface-inter";
+
 
 /* Custom root variables */
 :root {
@@ -21,8 +22,8 @@ html {
   line-height: var(--line-height);
   font-weight: var(--font-weight);
   color-scheme: var(--color-scheme);
-  color: rgba(255, 255, 255); /* Default color */
-  background-color: rgb(255, 255, 255); /* Default background */
+  color: rgba(255, 255, 255);
+  background-color: rgb(255, 255, 255);
   -webkit-font-smoothing: var(--webkit-font-smoothing);
   -moz-osx-font-smoothing: var(--moz-osx-font-smoothing);
   text-rendering: var(--text-rendering);
@@ -35,12 +36,13 @@ html {
 /* Apply Tailwind's defaults for body */
 body {
   font-family: var(--font-sans);
-  background-color: rgb(255, 255, 255); /* Default background */
-  color: rgba(255, 255, 255); /* Default color */
+  background-color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255);
   -webkit-font-smoothing: var(--webkit-font-smoothing);
   -moz-osx-font-smoothing: var(--moz-osx-font-smoothing);
   text-rendering: var(--text-rendering);
-  @apply font-sans text-base leading-relaxed; /* Tailwind utilities */
+  @apply font-sans text-base leading-relaxed;
+  overflow-x: hidden;
 }
 
 /* Universal box-sizing and transitions */
