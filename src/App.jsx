@@ -145,7 +145,7 @@ export function App() {
                   className={`font-normal transition-colors ${
                     size.width === 0
                       ? "text-zinc-900 transition-colors delay-200"
-                      : "text-zinc-100 "
+                      : "text-zinc-100 transition-colors delay-100"
                   }`}
                 >
                   {":"}File
@@ -156,7 +156,7 @@ export function App() {
                   toggleSize(); // Call the toggleSize function
                   setIsDarkMode((prev) => !prev); // Toggle dark mode
                 }}
-                className="absolute flex justify-center items-center bottom-[-1.25rem] right-4 w-10 h-10 bg-zinc-100 dark:bg-zinc-700 border-2 border-zinc-200 dark:border-transparent rounded-full transition-all duration-400 delay-100 ease-in-out shadow-md dark:shadow-sky-800"
+                className="absolute flex justify-center items-center bottom-[-1.25rem] right-2 w-10 h-10 bg-zinc-100 dark:bg-zinc-700 border-2 border-zinc-200 dark:border-transparent rounded-full transition-all duration-400 delay-100 ease-in-out shadow-md dark:shadow-sky-800"
               >
                 {isDarkMode ? (
                   <svg
