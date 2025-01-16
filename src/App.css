@@ -1,3 +1,19 @@
+/* Hide scrollbar but keep scroll functionality */
+html,
+body {
+  overflow: scroll; /* Allow scrolling */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+body {
+  -ms-overflow-style: none; /* For IE and Edge */
+  scrollbar-width: none; /* For Firefox */
+}
+
 /* Standard Font Sizes */
 h1 {
   font-size: 2rem; /* 32px */
