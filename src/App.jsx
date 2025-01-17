@@ -1,7 +1,7 @@
 import "react";
 import "./App.css";
 import { useResponsive } from "./Responsive";
-//import { Milestone } from "./Milestone";
+import About from "./About";
 import { useEffect, useState } from "react";
 import {
   ViteIcon,
@@ -103,6 +103,7 @@ export function App() {
     if (hash && hash !== activeLink) {
       setActiveLink(hash);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.location.hash]);
 
   const [size, setSize] = useState(() => {
@@ -315,14 +316,12 @@ export function App() {
           id="home"
           className="relative w-full min-h-screen overflow-hidden"
         >
-          {/* Content Container */}
           <div className="absolute top-0 left-0 w-full h-full pt-20 md:pl-56 md:p-0">
             <div className="relative flex flex-col items-center justify-center text-center max-w-[110rem] h-screen mr-auto px-5 lg:px-5">
               <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold transition-colors delay-200 lg:delay-300">
                 HELLO CRUEL WORLD
               </h1>
               <div className="flex flex-wrap justify-center space-x-6 py-5">
-                {/* Render individual icons */}
                 <ViteIcon width={45} height={45} />
                 <ReactIcon width={45} height={45} />
                 <PythonIcon width={45} height={45} />
@@ -345,12 +344,9 @@ export function App() {
           id="about"
           className="relative w-full min-h-screen overflow-hidden"
         >
-          {/* Content Container */}
           <div className="absolute top-0 left-0 w-full h-full p-0 md:pl-56 md:p-0">
             <div className="max-w-[110rem] h-full mr-auto px-2 md:px-5">
-              <h1 className="text-zinc-800/80 dark:text-zinc-100 text-[2rem] font-mono font-semibold transition-colors delay-200 lg:delay-300">
-                ABOUT ME
-              </h1>
+              <About />
             </div>
           </div>
         </section>
