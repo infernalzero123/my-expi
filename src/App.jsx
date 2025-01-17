@@ -1,25 +1,13 @@
 import "react";
 import "./App.css";
 import { useResponsive } from "./Responsive";
+import Home from "./Home";
 import About from "./About";
+//import Knowledge from "./Knowledge";
+//import Projects from "./Projects";
+//import Education from "./Education";
+//import Contact from "./Contact";
 import { useEffect, useState } from "react";
-import {
-  ViteIcon,
-  ReactIcon,
-  PythonIcon,
-  PhpIcon,
-  JavaIcon,
-  JavascriptIcon,
-  TypescriptIcon,
-  CPPIcon,
-  TailwindCSSIcon,
-  BootstrapIcon,
-  GithubIcon,
-  VSCodeIcon,
-  MysqlIcon,
-  PSIcon,
-} from "./RenderIcons";
-
 import {
   HomeIcon,
   UserIcon,
@@ -30,6 +18,7 @@ import {
   AcademicCapIcon,
 } from "@heroicons/react/24/outline";
 
+// Render Navbar Manu
 const navItems = [
   { label: "Home", icon: HomeIcon, href: "home" },
   { label: "About", icon: UserIcon, href: "about" },
@@ -38,6 +27,12 @@ const navItems = [
   { label: "Education", icon: BuildingLibraryIcon, href: "education" },
   { label: "Contact", icon: EnvelopeIcon, href: "contact" },
   { label: "Milestone", icon: AcademicCapIcon },
+];
+
+// Render Section
+const renderSection = [
+  { name: "Home", id: "home", component: <Home /> },
+  { name: "About", id: "about", component: <About /> },
 ];
 
 const getGradientColor = (index) => {
@@ -160,7 +155,7 @@ export function App() {
       {/* Body Container */}
       <div className="w-screen min-h-screen overflow-hidden m-0 p-0 lg:mt-0">
         {/* Dark Mode Overlay */}
-        <div className="fixed top-0 left-0 flex flex-col items-center justify-center min-h-screen bg-lime-500">
+        <div className="fixed top-0 left-0 flex flex-col items-center justify-center min-h-screen">
           <div
             className={`rounded-full absolute top-0 left-0 ${
               size.width === 0
@@ -312,44 +307,21 @@ export function App() {
           </div>
         </div>
         {/* Section */}
-        <section
-          id="home"
-          className="relative w-full min-h-screen overflow-hidden"
-        >
-          <div className="absolute top-0 left-0 w-full h-full pt-20 lg:pl-56 lg:p-0">
-            <div className="relative flex flex-col items-center justify-center text-center max-w-[110rem] h-screen mr-auto px-5 lg:px-5">
-              <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold transition-colors delay-200 lg:delay-300">
-                HELLO CRUEL WORLD
-              </h1>
-              <div className="flex flex-wrap justify-center space-x-6 py-5">
-                <ViteIcon width={45} height={45} />
-                <ReactIcon width={45} height={45} />
-                <PythonIcon width={45} height={45} />
-                <PhpIcon width={45} height={45} />
-                <JavaIcon width={45} height={45} />
-                <JavascriptIcon width={45} height={45} />
-                <TypescriptIcon width={45} height={45} />
-                <CPPIcon width={45} height={45} />
-                <TailwindCSSIcon width={45} height={45} />
-                <BootstrapIcon width={45} height={45} />
-                <GithubIcon width={45} height={45} />
-                <VSCodeIcon width={45} height={45} />
-                <MysqlIcon width={45} height={45} />
-                <PSIcon width={45} height={45} />
+        <div>
+          {renderSection.map((section) => (
+            <section
+              key={section.id}
+              id={section.id}
+              className="relative w-full min-h-screen overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-full h-full p-0 lg:pl-56 lg:p-0">
+                <div className="max-w-[110rem] h-full mr-auto px-5 py-5 lg:px-10 homebg">
+                  {section.component}
+                </div>
               </div>
-            </div>
-          </div>
-        </section>
-        <section
-          id="about"
-          className="relative w-full min-h-screen overflow-hidden"
-        >
-          <div className="absolute top-0 left-0 w-full h-full p-0 lg:pl-56 lg:p-0">
-            <div className="max-w-[110rem] h-full mr-auto px-5 py-5 lg:px-10">
-              <About />
-            </div>
-          </div>
-        </section>
+            </section>
+          ))}
+        </div>
       </div>
     </>
   );
