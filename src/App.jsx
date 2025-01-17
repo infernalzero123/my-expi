@@ -2,6 +2,7 @@ import "react";
 import "./App.css";
 import { useResponsive } from "./Responsive";
 //import { Milestone } from "./Milestone";
+import { useEffect, useState } from "react";
 import {
   ViteIcon,
   ReactIcon,
@@ -28,7 +29,6 @@ import {
   BriefcaseIcon,
   AcademicCapIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
 
 const navItems = [
   { label: "Home", icon: HomeIcon, href: "home" },
@@ -63,12 +63,48 @@ const getGradientColor = (index) => {
 
 export function App() {
   const [activeLink, setActiveLink] = useState("");
-  // Track the active section when the hash changes
-  useEffect(() => {
-    setActiveLink(window.location.hash);
-  }, []);
-
   const { isDarkMode, setIsDarkMode } = useResponsive();
+
+  useEffect(() => {
+    // Function to update active link based on scroll position
+    const handleScroll = () => {
+      const sections = document.querySelectorAll("section");
+      let currentSection = "";
+
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+
+        // Check if the current scroll position is inside the section
+        if (
+          window.scrollY >= sectionTop - 50 &&
+          window.scrollY < sectionTop + sectionHeight - 50
+        ) {
+          currentSection = `#${section.id}`;
+        }
+      });
+
+      if (currentSection !== activeLink) {
+        setActiveLink(currentSection);
+      }
+    };
+
+    // Listen to the scroll event
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [activeLink]);
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash && hash !== activeLink) {
+      setActiveLink(hash);
+    }
+  }, [window.location.hash]);
+
   const [size, setSize] = useState(() => {
     // Initialize size based on dark mode or previous state
     return isDarkMode ? { width: window.innerWidth * 5 } : { width: 0 };
@@ -210,7 +246,7 @@ export function App() {
             <ul className="relative hidden md:block flex-row md:flex-col space-y-3 pl-8 px-5 overflow-hidden">
               <div className="absolute top-2 left-4 w-[2px] h-full bg-gradient-to-t from-sky-800 to-purple-800 rounded-full">
                 <div
-                  className="absolute top-0 left-0 ml-[-7px] w-4 h-4 border-[3px] overflow-hidden rounded-full transition-all duration-1000"
+                  className="absolute top-0 left-0 ml-[-7px] w-4 h-4 border-[3px] overflow-hidden rounded-full transition-all duration-200 delay-100"
                   style={{
                     top: `${
                       navItems.findIndex(
@@ -283,7 +319,7 @@ export function App() {
           <div className="absolute top-0 left-0 w-full h-full pt-20 md:pl-56 md:p-0">
             <div className="relative flex flex-col items-center justify-center text-center max-w-[110rem] h-screen mr-auto px-5 lg:px-5">
               <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold transition-colors delay-200 lg:delay-300">
-                HELLO WORLD
+                HELLO CRUEL WORLD
               </h1>
               <div className="flex flex-wrap justify-center space-x-6 py-5">
                 {/* Render individual icons */}
@@ -312,14 +348,12 @@ export function App() {
           {/* Content Container */}
           <div className="absolute top-0 left-0 w-full h-full p-0 md:pl-56 md:p-0">
             <div className="max-w-[110rem] h-full mr-auto px-2 md:px-5">
-              <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold text-end transition-colors delay-200 lg:delay-300">
-                SECTION 2
+              <h1 className="text-zinc-800/80 dark:text-zinc-100 text-[2rem] font-mono font-semibold transition-colors delay-200 lg:delay-300">
+                ABOUT ME
               </h1>
             </div>
           </div>
         </section>
-        {/* Footer */}
-        <footer></footer>
       </div>
     </>
   );
