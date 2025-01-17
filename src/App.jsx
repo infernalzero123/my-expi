@@ -158,7 +158,7 @@ export function App() {
   return (
     <>
       {/* Body Container */}
-      <div className="w-screen min-h-screen overflow-hidden m-0 p-0 md:mt-0">
+      <div className="w-screen min-h-screen overflow-hidden m-0 p-0 lg:mt-0">
         {/* Dark Mode Overlay */}
         <div className="fixed top-0 left-0 flex flex-col items-center justify-center min-h-screen bg-lime-500">
           <div
@@ -177,11 +177,11 @@ export function App() {
           ></div>
         </div>
         {/* Navbar Container */}
-        <div className="fixed top-0 left-0 w-full min-h-20 md:w-56 md:h-screen bg-zinc-8000 shadow-lg z-50">
+        <div className="fixed top-0 left-0 w-full min-h-20 lg:w-56 lg:h-screen bg-zinc-8000 shadow-lg z-50">
           {/* Navbar Content */}
           <nav>
             <div
-              className={`relative hidden md:flex flex-row items-center w-full h-20 border-b-2 border-zinc-200 dark:border-zinc-700 px-5 mb-5 ${
+              className={`relative hidden lg:flex flex-row items-center w-full h-20 border-b-2 border-zinc-200 dark:border-zinc-700 px-5 mb-5 ${
                 isDarkMode
                   ? "transition-colors duration-200 delay-100"
                   : "transition-colors duration-200 delay-300"
@@ -244,7 +244,7 @@ export function App() {
                 )}
               </div>
             </div>
-            <ul className="relative hidden md:block flex-row md:flex-col space-y-3 pl-8 px-5 overflow-hidden">
+            <ul className="relative hidden lg:block flex-row lg:flex-col space-y-3 pl-8 px-5 overflow-hidden">
               <div className="absolute top-2 left-4 w-[2px] h-full bg-gradient-to-t from-sky-800 to-purple-800 rounded-full">
                 <div
                   className="absolute top-0 left-0 ml-[-7px] w-4 h-4 border-[3px] overflow-hidden rounded-full transition-all duration-200 delay-100"
@@ -316,7 +316,7 @@ export function App() {
           id="home"
           className="relative w-full min-h-screen overflow-hidden"
         >
-          <div className="absolute top-0 left-0 w-full h-full pt-20 md:pl-56 md:p-0">
+          <div className="absolute top-0 left-0 w-full h-full pt-20 lg:pl-56 lg:p-0">
             <div className="relative flex flex-col items-center justify-center text-center max-w-[110rem] h-screen mr-auto px-5 lg:px-5">
               <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold transition-colors delay-200 lg:delay-300">
                 HELLO CRUEL WORLD
@@ -344,8 +344,8 @@ export function App() {
           id="about"
           className="relative w-full min-h-screen overflow-hidden"
         >
-          <div className="absolute top-0 left-0 w-full h-full p-0 md:pl-56 md:p-0">
-            <div className="max-w-[110rem] h-full mr-auto px-2 md:px-5">
+          <div className="absolute top-0 left-0 w-full h-full p-0 lg:pl-56 lg:p-0">
+            <div className="max-w-[110rem] h-full mr-auto px-5 py-5 lg:px-10">
               <About />
             </div>
           </div>
