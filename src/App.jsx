@@ -3,6 +3,23 @@ import "./App.css";
 import { useResponsive } from "./Responsive";
 //import { Milestone } from "./Milestone";
 import {
+  ViteIcon,
+  ReactIcon,
+  PythonIcon,
+  PhpIcon,
+  JavaIcon,
+  JavascriptIcon,
+  TypescriptIcon,
+  CPPIcon,
+  TailwindCSSIcon,
+  BootstrapIcon,
+  GithubIcon,
+  VSCodeIcon,
+  MysqlIcon,
+  PSIcon,
+} from "./RenderIcons";
+
+import {
   HomeIcon,
   UserIcon,
   BookOpenIcon,
@@ -134,7 +151,6 @@ export function App() {
               }`}
             >
               <img
-                onClick={() => setIsDarkMode((prev) => !prev)}
                 src="../src/img/shield.png"
                 className="w-10 h-10"
                 alt="Shield Icon"
@@ -230,16 +246,18 @@ export function App() {
                   {item.href ? (
                     <a
                       href={`#${item.href}`}
-                      className="flex items-center space-x-6 w-full py-2 pl-2 pr-4 text-zinc-800 dark:text-zinc-100 transition-colors delay-200 lg:delay-300" // Apply padding here
+                      className="flex items-center space-x-6 w-full py-2 pl-2 pr-4 text-zinc-800 dark:text-zinc-100" // Apply padding here
                       onClick={() => setActiveLink(`#${item.href}`)} // Update the active link on click
                     >
-                      <div className="w-8 h-8 flex justify-center items-center">
+                      <div className="w-8 h-8 flex justify-center items-center transition-colors delay-100 lg:delay-200">
                         <item.icon className="w-7 h-7" />
                       </div>
-                      <span className="whitespace-nowrap">{item.label}</span>
+                      <span className="whitespace-nowrap transition-colors delay-100 lg:delay-200">
+                        {item.label}
+                      </span>
                     </a>
                   ) : (
-                    <a className="text-zinc-800 dark:text-zinc-100 transition-colors delay-200 lg:delay-300">
+                    <a className="text-zinc-800 dark:text-zinc-100 transition-colors delay-300 lg:delay-200">
                       <div className="flex items-center space-x-6 w-full py-2 pl-2 pr-4">
                         <div className="w-8 h-8 flex justify-center items-center">
                           <item.icon className="w-7 h-7" />
@@ -263,10 +281,27 @@ export function App() {
         >
           {/* Content Container */}
           <div className="absolute top-0 left-0 w-full h-full pt-20 md:pl-56 md:p-0">
-            <div className="relative max-w-[110rem] h-full mr-auto">
-              <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold text-end transition-colors delay-200 lg:delay-300">
-                SECTION 1
+            <div className="relative flex flex-col items-center justify-center text-center max-w-[110rem] h-screen mr-auto px-5 lg:px-5">
+              <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold transition-colors delay-200 lg:delay-300">
+                HELLO WORLD
               </h1>
+              <div className="flex flex-wrap justify-center space-x-6 py-5">
+                {/* Render individual icons */}
+                <ViteIcon width={45} height={45} />
+                <ReactIcon width={45} height={45} />
+                <PythonIcon width={45} height={45} />
+                <PhpIcon width={45} height={45} />
+                <JavaIcon width={45} height={45} />
+                <JavascriptIcon width={45} height={45} />
+                <TypescriptIcon width={45} height={45} />
+                <CPPIcon width={45} height={45} />
+                <TailwindCSSIcon width={45} height={45} />
+                <BootstrapIcon width={45} height={45} />
+                <GithubIcon width={45} height={45} />
+                <VSCodeIcon width={45} height={45} />
+                <MysqlIcon width={45} height={45} />
+                <PSIcon width={45} height={45} />
+              </div>
             </div>
           </div>
         </section>
