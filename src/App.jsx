@@ -31,7 +31,7 @@ const navItems = [
 
 // Render Section
 const renderSection = [
-  { name: "Home", id: "home", component: <Home /> },
+  //{ name: "Home", id: "home", component: <Home /> }, commented for separate home render
   { name: "About", id: "about", component: <About /> },
 ];
 
@@ -150,9 +150,31 @@ export function App() {
     }
   }, [size, isDarkMode]);
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check if the scroll height surpasses the screen height
+      if (window.scrollY === window.innerHeight) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    // Add the scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
       {/* Body Container */}
+      <div className="fixed top-0 z-10 h-screen w-screen bg-transparent bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.10)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)] transition-opacity duration-500"></div>
       <div className="w-screen min-h-screen overflow-hidden m-0 p-0 lg:mt-0">
         {/* Dark Mode Overlay */}
         <div className="fixed top-0 left-0 flex flex-col items-center justify-center min-h-screen">
@@ -172,7 +194,11 @@ export function App() {
           ></div>
         </div>
         {/* Navbar Container */}
-        <div className="fixed top-0 left-0 w-full min-h-20 lg:w-56 lg:h-screen bg-zinc-8000 shadow-lg z-50">
+        <div
+          className={`fixed top-0 left-0 w-full min-h-20 lg:w-56 lg:h-screen bg-zinc-800 shadow-md z-50 transition-opacity duration-500 ${
+            isScrolled ? "opacity-100" : "opacity-0"
+          }`}
+        >
           {/* Navbar Content */}
           <nav>
             <div
@@ -308,14 +334,26 @@ export function App() {
         </div>
         {/* Section */}
         <div>
+          <section
+            id="home"
+            className="relative w-full min-h-screen overflow-hidden"
+          >
+            <div className="absolute top-0 left-0 w-full h-full p-0">
+              <div className="relative flex items-center justify-center max-w-[110rem] h-full mr-auto px-5 py-5 lg:px-10">
+                <Home />
+              </div>
+            </div>
+          </section>
           {renderSection.map((section) => (
             <section
               key={section.id}
               id={section.id}
-              className="relative w-full min-h-screen overflow-hidden"
+              className={`relative w-full min-h-screen overflow-hidden  ${
+                isScrolled ? "opacity-100" : "opacity-0"
+              }`}
             >
               <div className="absolute top-0 left-0 w-full h-full p-0 lg:pl-56 lg:p-0">
-                <div className="max-w-[110rem] h-full mr-auto px-5 py-5 lg:px-10 homebg">
+                <div className="relative max-w-[110rem] h-full mr-auto px-5 py-5 lg:px-10">
                   {section.component}
                 </div>
               </div>
