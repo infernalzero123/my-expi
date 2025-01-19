@@ -3,7 +3,7 @@ import "./App.css";
 import { useResponsive } from "./Responsive";
 import Home from "./Home";
 import About from "./About";
-//import Knowledge from "./Knowledge";
+import Knowledge from "./Knowledge";
 //import Projects from "./Projects";
 //import Education from "./Education";
 //import Contact from "./Contact";
@@ -33,6 +33,7 @@ const navItems = [
 const renderSection = [
   //{ name: "Home", id: "home", component: <Home /> }, commented for separate home render
   { name: "About", id: "about", component: <About /> },
+  { name: "Knowledge", id: "knowledge", component: <Knowledge /> },
 ];
 
 const getGradientColor = (index) => {
@@ -79,6 +80,7 @@ export function App() {
         }
       });
 
+      // Update the active link if necessary
       if (currentSection !== activeLink) {
         setActiveLink(currentSection);
       }
@@ -150,37 +152,6 @@ export function App() {
     }
   }, [size, isDarkMode]);
 
-  const [opacity, setOpacity] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const screenHeight = window.innerHeight;
-
-      // Calculate opacity based on scroll position, 60% scroll triggers opacity
-      const newOpacity = Math.min(
-        (scrollPosition - screenHeight * 0.8) / (screenHeight * 0.2),
-        1
-      );
-
-      // Set opacity for scroll above 60% height
-      setOpacity(newOpacity);
-
-      // Set visibility based on scroll position, 20% scroll triggers visibility toggle
-      const newVisibility = scrollPosition >= screenHeight * 0.3;
-      setIsVisible(newVisibility);
-    };
-
-    // Add the scroll event listener
-    window.addEventListener("scroll", handleScroll);
-
-    // Clean up the event listener on unmount
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <>
       {/* Body Container */}
@@ -204,13 +175,7 @@ export function App() {
           ></div>
         </div>
         {/* Navbar Container */}
-        <div
-          className={`fixed top-0 left-0 w-full min-h-20 lg:w-56 lg:h-screen shadow-md z-50 transition-opacity duration-1000`}
-          style={{
-            opacity: opacity, // Apply dynamic opacity based on scroll position
-            visibility: isVisible ? "visible" : "hidden", // Apply visibility toggle based on scroll position
-          }}
-        >
+        <div className="fixed top-0 left-0 w-full min-h-20 md:w-56 md:h-screen bg-zinc-8000 shadow-lg z-50">
           {/* Navbar Content */}
           <nav>
             <div
@@ -350,21 +315,13 @@ export function App() {
             id="home"
             className="relative w-full min-h-screen overflow-hidden"
           >
-            <div className="absolute top-0 left-0 w-full h-full p-0">
-              <div className="relative flex items-center justify-center max-w-[110rem] h-full mr-auto px-5 py-5 lg:px-10">
-                <Home />
-              </div>
-            </div>
+            <Home />
           </section>
           {renderSection.map((section) => (
             <section
               key={section.id}
               id={section.id}
-              className={`relative w-full min-h-screen overflow-hidden transition-opacity duration-1000`}
-              style={{
-                opacity: opacity, // Apply dynamic opacity based on scroll position
-                visibility: isVisible ? "visible" : "hidden", // Apply visibility toggle based on scroll position
-              }}
+              className="relative w-full min-h-screen overflow-hidden transition-opacity duration-1000"
             >
               <div className="absolute top-0 left-0 w-full h-full p-0 lg:pl-56 lg:p-0">
                 <div className="relative max-w-[110rem] h-full mr-auto px-5 py-5 lg:px-10">
