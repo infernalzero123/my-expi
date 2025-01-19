@@ -150,16 +150,26 @@ export function App() {
     }
   }, [size, isDarkMode]);
 
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [opacity, setOpacity] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Check if the scroll height surpasses the screen height
-      if (window.scrollY === window.innerHeight) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      const scrollPosition = window.scrollY;
+      const screenHeight = window.innerHeight;
+
+      // Calculate opacity based on scroll position, 60% scroll triggers opacity
+      const newOpacity = Math.min(
+        (scrollPosition - screenHeight * 0.8) / (screenHeight * 0.2),
+        1
+      );
+
+      // Set opacity for scroll above 60% height
+      setOpacity(newOpacity);
+
+      // Set visibility based on scroll position, 20% scroll triggers visibility toggle
+      const newVisibility = scrollPosition >= screenHeight * 0.3;
+      setIsVisible(newVisibility);
     };
 
     // Add the scroll event listener
@@ -195,9 +205,11 @@ export function App() {
         </div>
         {/* Navbar Container */}
         <div
-          className={`fixed top-0 left-0 w-full min-h-20 lg:w-56 lg:h-screen bg-zinc-800 shadow-md z-50 transition-opacity duration-500 ${
-            isScrolled ? "opacity-100" : "opacity-0"
-          }`}
+          className={`fixed top-0 left-0 w-full min-h-20 lg:w-56 lg:h-screen shadow-md z-50 transition-opacity duration-1000`}
+          style={{
+            opacity: opacity, // Apply dynamic opacity based on scroll position
+            visibility: isVisible ? "visible" : "hidden", // Apply visibility toggle based on scroll position
+          }}
         >
           {/* Navbar Content */}
           <nav>
@@ -348,9 +360,11 @@ export function App() {
             <section
               key={section.id}
               id={section.id}
-              className={`relative w-full min-h-screen overflow-hidden  ${
-                isScrolled ? "opacity-100" : "opacity-0"
-              }`}
+              className={`relative w-full min-h-screen overflow-hidden transition-opacity duration-1000`}
+              style={{
+                opacity: opacity, // Apply dynamic opacity based on scroll position
+                visibility: isVisible ? "visible" : "hidden", // Apply visibility toggle based on scroll position
+              }}
             >
               <div className="absolute top-0 left-0 w-full h-full p-0 lg:pl-56 lg:p-0">
                 <div className="relative max-w-[110rem] h-full mr-auto px-5 py-5 lg:px-10">
