@@ -1,24 +1,13 @@
 import "react";
 import "./App.css";
 import { useResponsive } from "./Responsive";
-//import { Milestone } from "./Milestone";
-import {
-  ViteIcon,
-  ReactIcon,
-  PythonIcon,
-  PhpIcon,
-  JavaIcon,
-  JavascriptIcon,
-  TypescriptIcon,
-  CPPIcon,
-  TailwindCSSIcon,
-  BootstrapIcon,
-  GithubIcon,
-  VSCodeIcon,
-  MysqlIcon,
-  PSIcon,
-} from "./RenderIcons";
-
+import Home from "./Home";
+import About from "./About";
+import Knowledge from "./Knowledge";
+//import Projects from "./Projects";
+//import Education from "./Education";
+//import Contact from "./Contact";
+import { useEffect, useState } from "react";
 import {
   HomeIcon,
   UserIcon,
@@ -28,8 +17,8 @@ import {
   BriefcaseIcon,
   AcademicCapIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
 
+// Render Navbar Manu
 const navItems = [
   { label: "Home", icon: HomeIcon, href: "home" },
   { label: "About", icon: UserIcon, href: "about" },
@@ -38,6 +27,12 @@ const navItems = [
   { label: "Education", icon: BuildingLibraryIcon, href: "education" },
   { label: "Contact", icon: EnvelopeIcon, href: "contact" },
   { label: "Milestone", icon: AcademicCapIcon },
+];
+
+// Render Section
+const renderSection = [
+  { name: "About", id: "about", component: <About /> },
+  { name: "Knowledge", id: "knowledge", component: <Knowledge /> },
 ];
 
 const getGradientColor = (index) => {
@@ -62,13 +57,50 @@ const getGradientColor = (index) => {
 };
 
 export function App() {
-  const [activeLink, setActiveLink] = useState("");
-  // Track the active section when the hash changes
-  useEffect(() => {
-    setActiveLink(window.location.hash);
-  }, []);
-
+  const [activeLink, setActiveLink] = useState("home");
   const { isDarkMode, setIsDarkMode } = useResponsive();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = document.querySelectorAll("section");
+      let currentSection = "";
+
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+
+        // Check if the current scroll position is inside the section
+        if (
+          window.scrollY >= sectionTop - 200 &&
+          window.scrollY < sectionTop + sectionHeight - 500
+        ) {
+          currentSection = `#${section.id}`;
+        }
+      });
+
+      // Update the active link if necessary
+      if (currentSection !== activeLink) {
+        setActiveLink(currentSection);
+      }
+    };
+
+    // Add the scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [activeLink]);
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash && hash !== activeLink) {
+      setActiveLink(hash);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.location.hash]);
+
   const [size, setSize] = useState(() => {
     // Initialize size based on dark mode or previous state
     return isDarkMode ? { width: window.innerWidth * 5 } : { width: 0 };
@@ -121,9 +153,10 @@ export function App() {
   return (
     <>
       {/* Body Container */}
-      <div className="w-screen min-h-screen overflow-hidden m-0 p-0 md:mt-0">
+      <div className="fixed top-0 z-10 h-screen w-screen bg-transparent bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.10)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)] transition-opacity duration-500"></div>
+      <div className="w-screen min-h-screen overflow-hidden m-0 p-0 lg:mt-0">
         {/* Dark Mode Overlay */}
-        <div className="fixed top-0 left-0 flex flex-col items-center justify-center min-h-screen bg-lime-500">
+        <div className="fixed top-0 left-0 flex flex-col items-center justify-center min-h-screen">
           <div
             className={`rounded-full absolute top-0 left-0 ${
               size.width === 0
@@ -140,11 +173,17 @@ export function App() {
           ></div>
         </div>
         {/* Navbar Container */}
-        <div className="fixed top-0 left-0 w-full min-h-20 md:w-56 md:h-screen bg-zinc-8000 shadow-lg z-50">
+        <div
+          className={`fixed top-0 left-0 w-full min-h-20 md:w-56 md:h-screen shadow-lg z-50 transition-opacity duration-500 ${
+            activeLink !== "#home"
+              ? "opacity-100 pointer-events-auto" // When activeLink is not "#home", show and make clickable
+              : "opacity-0 pointer-events-none" // When activeLink is "#home", hide and make non-clickable
+          }`}
+        >
           {/* Navbar Content */}
           <nav>
             <div
-              className={`relative hidden md:flex flex-row items-center w-full h-20 border-b-2 border-zinc-200 dark:border-zinc-700 px-5 mb-5 ${
+              className={`relative hidden lg:flex flex-row items-center w-full h-20 border-b-2 border-zinc-200 dark:border-zinc-700 px-5 mb-5 ${
                 isDarkMode
                   ? "transition-colors duration-200 delay-100"
                   : "transition-colors duration-200 delay-300"
@@ -207,10 +246,10 @@ export function App() {
                 )}
               </div>
             </div>
-            <ul className="relative hidden md:block flex-row md:flex-col space-y-3 pl-8 px-5 overflow-hidden">
+            <ul className="relative hidden lg:block flex-row lg:flex-col space-y-3 pl-8 px-5 overflow-hidden">
               <div className="absolute top-2 left-4 w-[2px] h-full bg-gradient-to-t from-sky-800 to-purple-800 rounded-full">
                 <div
-                  className="absolute top-0 left-0 ml-[-7px] w-4 h-4 border-[3px] overflow-hidden rounded-full transition-all duration-1000"
+                  className="absolute top-0 left-0 ml-[-7px] w-4 h-4 border-[3px] overflow-hidden rounded-full transition-all duration-200 delay-100"
                   style={{
                     top: `${
                       navItems.findIndex(
@@ -275,51 +314,35 @@ export function App() {
           </div>
         </div>
         {/* Section */}
-        <section
-          id="home"
-          className="relative w-full min-h-screen overflow-hidden"
-        >
-          {/* Content Container */}
-          <div className="absolute top-0 left-0 w-full h-full pt-20 md:pl-56 md:p-0">
-            <div className="relative flex flex-col items-center justify-center text-center max-w-[110rem] h-screen mr-auto px-5 lg:px-5">
-              <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold transition-colors delay-200 lg:delay-300">
-                HELLO WORLD
-              </h1>
-              <div className="flex flex-wrap justify-center space-x-6 py-5">
-                {/* Render individual icons */}
-                <ViteIcon width={45} height={45} />
-                <ReactIcon width={45} height={45} />
-                <PythonIcon width={45} height={45} />
-                <PhpIcon width={45} height={45} />
-                <JavaIcon width={45} height={45} />
-                <JavascriptIcon width={45} height={45} />
-                <TypescriptIcon width={45} height={45} />
-                <CPPIcon width={45} height={45} />
-                <TailwindCSSIcon width={45} height={45} />
-                <BootstrapIcon width={45} height={45} />
-                <GithubIcon width={45} height={45} />
-                <VSCodeIcon width={45} height={45} />
-                <MysqlIcon width={45} height={45} />
-                <PSIcon width={45} height={45} />
+        <div>
+          <section
+            id="home"
+            className={`relative w-full h-auto overflow-hidden ${
+              activeLink === `#home`
+                ? "transition-opacity duration-[2s] opacity-100"
+                : "transition-opacity duration-0 delay-100 opacity-0"
+            }`}
+          >
+            <Home />
+          </section>
+          {renderSection.map((section) => (
+            <section
+              key={section.id}
+              id={section.id}
+              className={`relative w-full min-h-screen overflow-hidden ${
+                activeLink === `#${section.id}`
+                  ? "transition-opacity duration-1000 opacity-100"
+                  : "transition-opacity duration-0 delay-100 opacity-0"
+              }`}
+            >
+              <div className="absolute top-0 left-0 w-full h-full p-0 lg:pl-56 lg:p-0">
+                <div className="relative max-w-[110rem] h-full mr-auto px-5 py-5 lg:px-10">
+                  {section.component}
+                </div>
               </div>
-            </div>
-          </div>
-        </section>
-        <section
-          id="about"
-          className="relative w-full min-h-screen overflow-hidden"
-        >
-          {/* Content Container */}
-          <div className="absolute top-0 left-0 w-full h-full p-0 md:pl-56 md:p-0">
-            <div className="max-w-[110rem] h-full mr-auto px-2 md:px-5">
-              <h1 className="text-zinc-800 dark:text-zinc-100 text-[2rem] font-mono font-semibold text-end transition-colors delay-200 lg:delay-300">
-                SECTION 2
-              </h1>
-            </div>
-          </div>
-        </section>
-        {/* Footer */}
-        <footer></footer>
+            </section>
+          ))}
+        </div>
       </div>
     </>
   );

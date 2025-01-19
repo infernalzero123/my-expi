@@ -31,7 +31,6 @@ const navItems = [
 
 // Render Section
 const renderSection = [
-  //{ name: "Home", id: "home", component: <Home /> }, commented for separate home render
   { name: "About", id: "about", component: <About /> },
   { name: "Knowledge", id: "knowledge", component: <Knowledge /> },
 ];
@@ -72,7 +71,7 @@ export function App() {
 
         // Check if the current scroll position is inside the section
         if (
-          window.scrollY >= sectionTop - 50 &&
+          window.scrollY >= sectionTop - 300 &&
           window.scrollY < sectionTop + sectionHeight - 50
         ) {
           currentSection = `#${section.id}`;
@@ -173,12 +172,13 @@ export function App() {
             }}
           ></div>
         </div>
+
         {/* Navbar Container */}
         <div
-          className={`fixed top-0 left-0 w-full min-h-20 md:w-56 md:h-screen bg-zinc-8000 shadow-lg z-50 ${
+          className={`fixed top-0 left-0 w-full min-h-20 lg:w-56 lg:h-screen shadow-lg z-50 transition-opacity duration-500 ${
             activeLink !== "#home"
-              ? "opacity-100 visibility-visible pointer-events-auto transition-all duration-1000"
-              : "opacity-0 visibility-hidden pointer-events-none transition-all duration-1000"
+              ? "opacity-100 pointer-events-auto" // When activeLink is not "#home", show and make clickable
+              : "opacity-0 pointer-events-none" // When activeLink is "#home", hide and make non-clickable
           }`}
         >
           {/* Navbar Content */}
@@ -318,9 +318,9 @@ export function App() {
         <div>
           <section
             id="home"
-            className={`relative w-full min-h-screen overflow-hidden ${
+            className={`relative w-full h-auto overflow-hidden ${
               activeLink === `#home`
-                ? "transition-opacity duration-1000 opacity-100"
+                ? "transition-opacity duration-[2s] opacity-100"
                 : "transition-opacity duration-0 delay-100 opacity-0"
             }`}
           >
