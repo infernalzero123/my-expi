@@ -58,11 +58,10 @@ const getGradientColor = (index) => {
 };
 
 export function App() {
-  const [activeLink, setActiveLink] = useState("");
+  const [activeLink, setActiveLink] = useState("home");
   const { isDarkMode, setIsDarkMode } = useResponsive();
 
   useEffect(() => {
-    // Function to update active link based on scroll position
     const handleScroll = () => {
       const sections = document.querySelectorAll("section");
       let currentSection = "";
@@ -86,10 +85,10 @@ export function App() {
       }
     };
 
-    // Listen to the scroll event
+    // Add the scroll event listener
     window.addEventListener("scroll", handleScroll);
 
-    // Cleanup the event listener when the component is unmounted
+    // Clean up the event listener on unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -175,7 +174,13 @@ export function App() {
           ></div>
         </div>
         {/* Navbar Container */}
-        <div className="fixed top-0 left-0 w-full min-h-20 md:w-56 md:h-screen bg-zinc-8000 shadow-lg z-50">
+        <div
+          className={`fixed top-0 left-0 w-full min-h-20 md:w-56 md:h-screen bg-zinc-8000 shadow-lg z-50 ${
+            activeLink !== "#home"
+              ? "opacity-100 visibility-visible pointer-events-auto transition-all duration-1000"
+              : "opacity-0 visibility-hidden pointer-events-none transition-all duration-1000"
+          }`}
+        >
           {/* Navbar Content */}
           <nav>
             <div
@@ -313,7 +318,11 @@ export function App() {
         <div>
           <section
             id="home"
-            className="relative w-full min-h-screen overflow-hidden"
+            className={`relative w-full min-h-screen overflow-hidden ${
+              activeLink === `#home`
+                ? "transition-opacity duration-1000 opacity-100"
+                : "transition-opacity duration-0 delay-100 opacity-0"
+            }`}
           >
             <Home />
           </section>
@@ -321,7 +330,11 @@ export function App() {
             <section
               key={section.id}
               id={section.id}
-              className="relative w-full min-h-screen overflow-hidden transition-opacity duration-1000"
+              className={`relative w-full min-h-screen overflow-hidden ${
+                activeLink === `#${section.id}`
+                  ? "transition-opacity duration-1000 opacity-100"
+                  : "transition-opacity duration-0 delay-100 opacity-0"
+              }`}
             >
               <div className="absolute top-0 left-0 w-full h-full p-0 lg:pl-56 lg:p-0">
                 <div className="relative max-w-[110rem] h-full mr-auto px-5 py-5 lg:px-10">
