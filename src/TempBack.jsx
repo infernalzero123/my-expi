@@ -71,8 +71,8 @@ export function App() {
 
         // Check if the current scroll position is inside the section
         if (
-          window.scrollY >= sectionTop - 200 &&
-          window.scrollY < sectionTop + sectionHeight - 500
+          window.scrollY >= sectionTop - 300 &&
+          window.scrollY < sectionTop + sectionHeight - 50
         ) {
           currentSection = `#${section.id}`;
         }
@@ -153,7 +153,7 @@ export function App() {
   return (
     <>
       {/* Body Container */}
-      <div className="fixed top-0 z-10 h-screen w-screen bg-transparent bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.10)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)] transition-opacity duration-500"></div>
+      <div className="fixed top-0 h-screen w-screen bg-transparent bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.10)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)] transition-opacity duration-500"></div>
       <div className="w-screen min-h-screen overflow-hidden m-0 p-0 lg:mt-0">
         {/* Dark Mode Overlay */}
         <div className="fixed top-0 left-0 flex flex-col items-center justify-center min-h-screen">
@@ -172,9 +172,10 @@ export function App() {
             }}
           ></div>
         </div>
+
         {/* Navbar Container */}
         <div
-          className={`fixed top-0 left-0 w-full min-h-20 md:w-56 md:h-screen shadow-lg z-50 transition-opacity duration-500 ${
+          className={`fixed top-0 left-0 w-full min-h-20 lg:w-56 lg:h-screen shadow-lg transition-opacity duration-500 z-50 ${
             activeLink !== "#home"
               ? "opacity-100 pointer-events-auto" // When activeLink is not "#home", show and make clickable
               : "opacity-0 pointer-events-none" // When activeLink is "#home", hide and make non-clickable

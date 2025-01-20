@@ -153,7 +153,6 @@ export function App() {
   return (
     <>
       {/* Body Container */}
-      <div className="fixed top-0 h-screen w-screen bg-transparent bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.10)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)] transition-opacity duration-500"></div>
       <div className="w-screen min-h-screen overflow-hidden m-0 p-0 lg:mt-0">
         {/* Dark Mode Overlay */}
         <div className="fixed top-0 left-0 flex flex-col items-center justify-center min-h-screen">
@@ -320,7 +319,7 @@ export function App() {
             id="home"
             className={`relative w-full h-auto overflow-hidden ${
               activeLink === `#home`
-                ? "transition-opacity duration-[2s] opacity-100"
+                ? "transition-opacity duration-1000 opacity-100"
                 : "transition-opacity duration-0 delay-100 opacity-0"
             }`}
           >
