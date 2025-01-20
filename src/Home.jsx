@@ -16,21 +16,49 @@ import {
   PSIcon,
 } from "./RenderIcons";
 
+const navItems = [
+  { label: "Home", href: "home" },
+  { label: "About", href: "about" },
+  { label: "Knowledge", href: "knowledge" },
+  { label: "Projects", href: "projects" },
+  { label: "Education", href: "education" },
+  { label: "Contact", href: "contact" },
+];
+
 const Home = () => {
   return (
     <>
-      <div className="w-full min-h-[150rem] p-0 bg-gradient-to-t from-transparent to-sky-800 mb-96 px-10 lg:px-20">
-        <div className="flex flex-col items-center justify-start h-full pt-5 lg:pt-60">
+      {/* Render navigation dynamically */}
+      <nav>
+        <div className="hidden lg:flex absolute top-0 left-0 w-full items-center justify-center py-5 px-10 lg:px-20">
+          <ul className="flex mx-auto space-x-10">
+            {/* Horizontal space between items */}
+            {navItems.map((item) => (
+              <li key={item.href} className="relative">
+                <a
+                  href={`#${item.href}`}
+                  className="text-lg text-zinc-100 font-thin hover:text-sky-500"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+
+      <div className="w-full min-h-[200rem] p-0 bg-gradient-to-t from-transparent to-sky-800 mb-96 px-10 lg:px-20">
+        <div className="max-w-7xl flex flex-col items-center justify-start h-full pt-5 lg:pt-60 mx-auto">
           <h1 className="text-zinc-100 text-[3rem] font-thin transition-colors delay-200 mt-10 lg:delay-300 text-center">
             <span className="font-semibold">Welcome</span> to my portfolio!
             I&apos;m{" "}
-            <span className="font-normal bg-gradient-to-r from-orange-300 to-rose-500 text-transparent bg-clip-text text-[4rem]">
+            <span className="font-normal bg-gradient-to-r from-orange-300 to-rose-500 text-transparent bg-clip-text text-[4rem] whitespace-nowrap">
               Paul Rey
             </span>
             <span className="block text-xl">
-              A passionate software developer dedicated to solving challenges
-              and creating impactful solutions. Explore my work and see how I
-              bring innovative ideas to life!
+              I dedicate myself to creating beautiful, responsive UI/UX web
+              designs that clients love, using modern technologies and
+              frameworks from the wide open-source community.
             </span>
           </h1>
           <div className="flex flex-wrap justify-center items-center gap-6 h-auto mt-10">

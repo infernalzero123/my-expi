@@ -318,7 +318,7 @@ export function App() {
         <div>
           <section
             id="home"
-            className={`relative w-full h-auto overflow-hidden ${
+            className={`relative w-full h-auto overflow-hidden z-50 ${
               activeLink === `#home`
                 ? "transition-opacity duration-[2s] opacity-100"
                 : "transition-opacity duration-0 delay-100 opacity-0"
@@ -330,7 +330,7 @@ export function App() {
             <section
               key={section.id}
               id={section.id}
-              className={`relative w-full min-h-screen overflow-hidden ${
+              className={`relative w-full min-h-screen overflow-hidden z-50 ${
                 activeLink === `#${section.id}`
                   ? "transition-opacity duration-1000 opacity-100"
                   : "transition-opacity duration-0 delay-100 opacity-0"
