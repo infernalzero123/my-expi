@@ -153,7 +153,7 @@ export function App() {
   return (
     <>
       {/* Body Container */}
-      <div className="fixed top-0 z-10 h-screen w-screen bg-transparent bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.10)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)] transition-opacity duration-500"></div>
+      <div className="fixed top-0 h-screen w-screen bg-transparent bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.10)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)] transition-opacity duration-500"></div>
       <div className="w-screen min-h-screen overflow-hidden m-0 p-0 lg:mt-0">
         {/* Dark Mode Overlay */}
         <div className="fixed top-0 left-0 flex flex-col items-center justify-center min-h-screen">
@@ -175,7 +175,7 @@ export function App() {
 
         {/* Navbar Container */}
         <div
-          className={`fixed top-0 left-0 w-full min-h-20 lg:w-56 lg:h-screen shadow-lg z-50 transition-opacity duration-500 ${
+          className={`fixed top-0 left-0 w-full min-h-20 lg:w-56 lg:h-screen shadow-lg transition-opacity duration-500 z-50 ${
             activeLink !== "#home"
               ? "opacity-100 pointer-events-auto" // When activeLink is not "#home", show and make clickable
               : "opacity-0 pointer-events-none" // When activeLink is "#home", hide and make non-clickable
@@ -318,7 +318,7 @@ export function App() {
         <div>
           <section
             id="home"
-            className={`relative w-full h-auto overflow-hidden z-50 ${
+            className={`relative w-full h-auto overflow-hidden ${
               activeLink === `#home`
                 ? "transition-opacity duration-[2s] opacity-100"
                 : "transition-opacity duration-0 delay-100 opacity-0"
@@ -330,7 +330,7 @@ export function App() {
             <section
               key={section.id}
               id={section.id}
-              className={`relative w-full min-h-screen overflow-hidden z-50 ${
+              className={`relative w-full min-h-screen overflow-hidden ${
                 activeLink === `#${section.id}`
                   ? "transition-opacity duration-1000 opacity-100"
                   : "transition-opacity duration-0 delay-100 opacity-0"

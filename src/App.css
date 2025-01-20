@@ -123,11 +123,12 @@ a {
 }
 
 .homebg {
-  background-image: url("./img/2062.jpgg");
+  background-image: url("./img/light.gif");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  z-index: 1;
 }
 
 .section {
